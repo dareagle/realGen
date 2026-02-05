@@ -1,14 +1,31 @@
-import realga as rg
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+import realga as rg
 
 
 class QuadraticFitness(rg.FitnessFunction):
     def eval(self, g: rg.RealChromosome):
-        return g.gene[0] * g.gene[0] + g.gene[1] * g.gene[1]
+        return np.sin(g.gene[0]) * np.sin(g.gene[0]) + 2 * np.sin(g.gene[1]) * np.cos(
+            g.gene[1]
+        )
 
 
 myFitnessFunction = QuadraticFitness()
+
+
+x = np.arange(-5.0, 5.0, 0.025)
+y = np.arange(-5.0, 5.0, 0.025)
+X, Y = np.meshgrid(x, y)
+Z = np.zeros_like(X)
+for i in range(len(y)):
+    for j in range(len(x)):
+        c = rg.RealChromosome(2)
+        c.gene[0] = x[j]
+        c.gene[1] = y[i]
+        Z[i, j] = myFitnessFunction.eval(c)
+
 
 options = rg.RealGAOptions()
 options.setChromosomeSize(2)
@@ -16,7 +33,7 @@ options.setPopulationSize(50)
 options.setBounds([-5.0, -5.0], [5.0, 5.0])
 options.setVerbose(1)
 options.setMutationType("gaussian")
-options.setMutationGaussianPerc(0.01, 0.001)
+options.setMutationGaussianPerc(0.05, 0.001)
 
 ga = rg.RealGA()
 ga.init(options, myFitnessFunction, False)
@@ -29,7 +46,8 @@ ax.set_xlim(-5, 5)
 ax.set_ylim(-5, 5)
 ax.set_title("GA population")
 ax.set_xlabel("x")
-ax.set_ylabel("y")
+
+CS = ax.contour(X, Y, Z)
 
 # initial empty scatter
 scatter = ax.scatter([], [])

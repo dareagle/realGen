@@ -59,6 +59,9 @@ int main(int argc,  char** argv) {
 }
 ```
 
+
+
+
 # Description
 
 * $F(x)$ represents the **fitness function**, a non-linear function defined by the user. The objective is to identify the *minimum value* of this function.
@@ -85,6 +88,13 @@ mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make
+```
+
+# Build Python wrapper - Linux
+
+After the build, run 
+```
+./install_python.sh
 ```
 
 # Build - Windows (Visual Studio 14)
