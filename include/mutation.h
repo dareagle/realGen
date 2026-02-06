@@ -27,7 +27,7 @@ public:
     Mutation();
     Mutation(float mutationRate, float mutationPerc);
     virtual ~Mutation();
-    virtual void mutate(RealChromosome &x, vector<float> &lb, vector<float> &ub) = 0;
+    virtual void mutate(RealChromosome &x, const vector<float> &lb, const vector<float> &ub) = 0;
     void setMutationRate(float mutationRate);
     void setMutationPercentage(float mutationPerc);
     float getMutationRate();
@@ -45,7 +45,7 @@ public:
     UniformMutation();
     UniformMutation(float mutationRate, float mutationPerc);
     ~UniformMutation();
-    void mutate(RealChromosome &x, vector<float> &lb, vector<float> &ub);
+    void mutate(RealChromosome &x, const vector<float> &lb, const vector<float> &ub);
 };
 
 // Gaussian Mutation
@@ -55,7 +55,7 @@ public:
     GaussianMutation();
     GaussianMutation(float mutationRate, float mutationPerc);
     ~GaussianMutation();
-    void mutate(RealChromosome &x, vector<float> &lb, vector<float> &ub);
+    void mutate(RealChromosome &x, const vector<float> &lb, const vector<float> &ub);
 };
 
 #endif // REALGA_MUTATION_H

@@ -133,16 +133,16 @@ chromosome_size = len(myFitnessFunction.get_params())
 options = rg.RealGAOptions()
 options.setChromosomeSize(chromosome_size)
 options.setSelectionType("roulette")
-options.setPopulationSize(80)
+options.setPopulationSize(1000)
 options.setBounds(
-    (-1 * np.ones(chromosome_size)).tolist(),
-    (1 * np.ones(chromosome_size)).tolist(),
+    (-0.2 * np.ones(chromosome_size)).tolist(),
+    (0.2 * np.ones(chromosome_size)).tolist(),
     )
 options.setVerbose(1)
 options.setMutationType("uniform")
 options.setCrossoverType("linear")
-options.setMutationUniformPerc(0.1, 0.0001)
-options.setElitismFactor(0.1)
+options.setMutationUniformPerc(0.1, 0.001)
+options.setElitismFactor(0.2)
 options.setSeed(21)
 
 ga = rg.RealGA()
@@ -161,7 +161,7 @@ for gen in range(40):
     for k, c in enumerate(pop):
         if k >= 10:
             break
-        print(list(c.gene)[:10], c.fitness)
+        print(list(c.gene)[:2], c.fitness)
 
     print(
         f"Gen {gen:02d} | Train Loss: {train_loss:.4f} | Test Acc (subset): {test_acc*100:.2f}%"

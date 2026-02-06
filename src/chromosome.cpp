@@ -22,6 +22,12 @@ RealChromosome::RealChromosome(const RealChromosome &c) : gene(c.gene), fitness(
 {
 }
 
+RealChromosome::RealChromosome(RealChromosome &&other) noexcept
+{
+    this->gene = std::move(other.gene);
+    this->fitness = other.fitness;
+}
+
 RealChromosome::~RealChromosome() = default;
 
 RealChromosome &RealChromosome::operator=(const RealChromosome &c)
@@ -33,6 +39,19 @@ RealChromosome &RealChromosome::operator=(const RealChromosome &c)
     }
     return *this;
 }
+
+// Move Assignment Operator
+RealChromosome &RealChromosome::operator=(RealChromosome &&other) noexcept
+{
+    if (this != &other)
+    {
+        // Release our own resources and take the others
+        this->gene = std::move(other.gene);
+        this->fitness = other.fitness;
+    }
+    return *this;
+}
+
 bool RealChromosome::operator<(const RealChromosome &c) const
 {
     return fitness < c.fitness;

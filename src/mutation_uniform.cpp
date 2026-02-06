@@ -10,19 +10,28 @@ UniformMutation::UniformMutation(float mutationRate, float mutationPerc) : Mutat
 
 UniformMutation::~UniformMutation() {}
 
-void UniformMutation::mutate(RealChromosome &x, vector<float> &lb, vector<float> &ub)
+void UniformMutation::mutate(RealChromosome &x, const vector<float> &lb, const vector<float> &ub)
 {
-    for (size_t i = 0; i < x.gene.size(); i++)
+    const size_t n = x.gene.size();
+
+    for (size_t i = 0; i < n; i++)
     {
         if (Stat::randUniform() < mMutationRate)
         {
-            float fraction = mMutationPerc * (Stat::randUniform() - 0.5) * (ub[i] - lb[i]);
+            float lower = lb[i];
+            float upper = ub[i];
+            float delta = upper - lower;
+            float gene = x.gene[i];
+            float fraction = mMutationPerc * (Stat::randUniform() - 0.5) * delta;
             // Mutate
-            x.gene[i] += fraction;
-            if (x.gene[i] < lb[i])
-                x.gene[i] = lb[i];
-            if (x.gene[i] > ub[i])
-                x.gene[i] = ub[i];
+            float mutGene = gene + fraction;
+
+            if (mutGene < lower)
+                mutGene = lower;
+            if (mutGene > upper)
+                mutGene = upper;
+
+            x.gene[i] = mutGene;
         }
     }
 }

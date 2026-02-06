@@ -7,9 +7,9 @@ import realga as rg
 
 class QuadraticFitness(rg.FitnessFunction):
     def eval(self, g: rg.RealChromosome):
-        return np.sin(g.gene[0]) * np.sin(g.gene[0]) + 2 * np.sin(g.gene[1]) * np.cos(
-            g.gene[1]
-        )
+        x = g.gene[0]
+        y = g.gene[1]
+        return 20 + x**2 + y**2 - 10 * (np.cos(2 * np.pi * x) + np.cos(2 * np.pi * y))
 
 
 myFitnessFunction = QuadraticFitness()
@@ -29,7 +29,7 @@ for i in range(len(y)):
 
 options = rg.RealGAOptions()
 options.setChromosomeSize(2)
-options.setPopulationSize(50)
+options.setPopulationSize(150)
 options.setBounds([-5.0, -5.0], [5.0, 5.0])
 options.setVerbose(1)
 options.setMutationType("gaussian")

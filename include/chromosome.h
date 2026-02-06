@@ -27,6 +27,10 @@ public:
 
     RealChromosome();
     RealChromosome(int n);
+
+    // Move constructor for high-performance sorting/selection
+    RealChromosome(RealChromosome &&other) noexcept;
+    // Copy constructor
     RealChromosome(const RealChromosome &c);
     ~RealChromosome();
 
@@ -40,6 +44,9 @@ public:
     float distanceTo(const RealChromosome &g) const;
 
     RealChromosome &operator=(const RealChromosome &c);
+    // Assignment by move
+    RealChromosome &operator=(RealChromosome &&other) noexcept;
+
     bool operator<(const RealChromosome &c) const;
     bool operator==(const RealChromosome &other) const;
 };
