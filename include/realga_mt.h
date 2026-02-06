@@ -10,8 +10,7 @@
         in parallel.
 ---------------------------------------------
 */
-#ifndef REALGA_MULTITHREAD_H
-#define REALGA_MULTITHREAD_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -30,5 +29,3 @@ public:
 
     void evolve() override;
 };
-
-#endif // REALGA_MULTITHREAD_H

@@ -8,12 +8,10 @@ RealChromosome::RealChromosome()
     fitness = std::numeric_limits<float>::max();
 }
 
-RealChromosome::RealChromosome(int n) : RealChromosome()
+RealChromosome::RealChromosome(size_t n) : RealChromosome()
 {
-    if (n <= 0)
-    {
-        throw std::invalid_argument("Chromosome size must be positive");
-    }
+    REALGA_ERROR(n <= 0, "Chromosome size must be positive");
+
     gene.reserve(n); // Reserve capacity to avoid reallocations
     gene.resize(n);
 }
@@ -98,10 +96,7 @@ std::string RealChromosome::toString() const
 
 float RealChromosome::distanceTo(const RealChromosome &g) const
 {
-    if (gene.size() != g.gene.size())
-    {
-        throw std::invalid_argument("Chromosomes must have same size for distance calculation");
-    }
+    REALGA_ERROR(gene.size() != g.gene.size(), "Chromosomes must have same size for distance calculation");
 
     float sse = 0.0f;
     for (size_t i = 0; i < gene.size(); ++i)
@@ -110,38 +105,4 @@ float RealChromosome::distanceTo(const RealChromosome &g) const
         sse += dx * dx;
     }
     return std::sqrt(sse);
-}
-
-void RealChromosome::randUniform(vector<float> &lb, vector<float> &ub)
-{
-    for (size_t i = 0; i < gene.size(); i++)
-    {
-        gene[i] = Stat::randUniform(lb[i], ub[i]);
-    }
-}
-
-void RealChromosome::randUniform(int i, vector<float> &lb, vector<float> &ub)
-{
-    gene[i] = Stat::randUniform(lb[i], ub[i]);
-}
-
-void RealChromosome::randGaussian(float mean, float sigma, vector<float> &lb, vector<float> &ub)
-{
-    for (size_t i = 0; i < gene.size(); i++)
-    {
-        gene[i] = Stat::randGaussian(mean, sigma);
-        if (gene[i] < lb[i])
-            gene[i] = lb[i];
-        if (gene[i] > ub[i])
-            gene[i] = ub[i];
-    }
-}
-
-void RealChromosome::randGaussian(int i, float mean, float sigma, vector<float> &lb, vector<float> &ub)
-{
-    gene[i] = Stat::randGaussian(mean, sigma);
-    if (gene[i] < lb[i])
-        gene[i] = lb[i];
-    if (gene[i] > ub[i])
-        gene[i] = ub[i];
 }

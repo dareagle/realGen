@@ -8,8 +8,8 @@
         This class is the implementation of mutation strategies
 ---------------------------------------------
 */
-#ifndef REALGA_MUTATION_H
-#define REALGA_MUTATION_H
+#pragma once
+
 #include "stat.h"
 #include "options.h"
 #include <cmath>
@@ -57,5 +57,3 @@ public:
     ~GaussianMutation();
     void mutate(RealChromosome &x, const vector<float> &lb, const vector<float> &ub);
 };
-
-#endif // REALGA_MUTATION_H

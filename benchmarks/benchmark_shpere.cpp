@@ -27,9 +27,9 @@ void benchmark_sphere(RealGAOptions opt, GAResults &results)
     results.name = "Sphere";
     results.maxIter = 1000;
     results.Np = 50;
-
     opt.setPopulationSize(results.Np);
     opt.setChromosomeSize(4);
+
     opt.setBounds(LB, UB);
 
     RealGA ga;

@@ -1,5 +1,14 @@
-#ifndef REALGA_MESSAGES_H
-#define REALGA_MESSAGES_H
+/*
+---------------------------------------------
+    author: Alessandro Nicolosi
+    website: https://github.com/alenic
+    license: MIT
+
+    file description:
+        helpers for error handling
+---------------------------------------------
+*/
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -20,8 +29,7 @@ public:
         throw RealGAException(std::string(__func__) + ": " + oss.str() + " (" + __FILE__ + ":" + std::to_string(__LINE__) + ")"); \
     }
 
-#define DEBUG(msg)                        \
-    {                                     \
-        cout << "DEBUG: " << msg << endl; \
+#define DEBUG(msg)                             \
+    {                                          \
+        std::cout << "DEBUG: " << msg << endl; \
     }
-#endif // REALGA_MESSAGES_H

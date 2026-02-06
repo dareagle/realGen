@@ -10,8 +10,8 @@
         crossover strategy with relative parameters.
 ---------------------------------------------
 */
-#ifndef REALGA_OPTIONS_H
-#define REALGA_OPTIONS_H
+#pragma once
+
 #include <string>
 #include <iostream>
 #include "messages.h"
@@ -102,5 +102,3 @@ public:
     float mutationGaussianPercDelta;
     float mutationGaussianPercMin;
 };
-
-#endif // REALGA_OPTIONS_H

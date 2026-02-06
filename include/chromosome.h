@@ -9,13 +9,14 @@
         optimization problem of type real (float)
 ---------------------------------------------
 */
-#ifndef REALGA_CHROMOSOME_H
-#define REALGA_CHROMOSOME_H
-#include "stat.h"
+#pragma once
+
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
 #include <string>
+#include "stat.h"
+#include "messages.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ public:
     float fitness;
 
     RealChromosome();
-    RealChromosome(int n);
+    RealChromosome(size_t n);
 
     // Move constructor for high-performance sorting/selection
     RealChromosome(RealChromosome &&other) noexcept;
@@ -35,11 +36,6 @@ public:
     ~RealChromosome();
 
     string toString() const;
-
-    void randUniform(vector<float> &lb, vector<float> &ub);
-    void randUniform(int i, vector<float> &lb, vector<float> &ub);
-    void randGaussian(float mean, float sigma, vector<float> &lb, vector<float> &ub);
-    void randGaussian(int i, float mean, float sigma, vector<float> &lb, vector<float> &ub);
 
     float distanceTo(const RealChromosome &g) const;
 
@@ -50,5 +46,3 @@ public:
     bool operator<(const RealChromosome &c) const;
     bool operator==(const RealChromosome &other) const;
 };
-
-#endif // REALGA_CHROMOSOME_H

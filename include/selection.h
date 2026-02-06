@@ -9,8 +9,8 @@
         strategies.
 ---------------------------------------------
 */
-#ifndef REALGA_SELECTION_H
-#define REALGA_SELECTION_H
+#pragma once
+
 #include "stat.h"
 #include "options.h"
 #include <stdlib.h>
@@ -76,5 +76,3 @@ private:
     vector<float> mTournamentFitness;
     vector<int> mTournamentIndex;
 };
-
-#endif // REALGA_SELECTION_H

@@ -12,8 +12,8 @@
         crossover strategies.
 ---------------------------------------------
 */
-#ifndef REALGA_H
-#define REALGA_H
+#pragma once
+
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
@@ -95,5 +95,3 @@ protected:
     // Fill mFitnessValues vector
     void fillFitnessValues(vector<RealChromosome> &population);
 };
-
-#endif // REALGA_H

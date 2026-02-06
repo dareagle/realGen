@@ -16,7 +16,7 @@ double StatTest::erfcinv(double x)
 {
     if (x <= 0.0 || x >= 2.0)
     {
-        throw std::domain_error("erfcinv(x) only valid for 0 < x < 2");
+        cerr << "erfcinv(x) only valid for 0 < x < 2" << endl;
     }
 
     double pp = (x < 1.0) ? x : 2.0 - x;

@@ -9,9 +9,9 @@
         the pseudo-random generation.
 ---------------------------------------------
 */
-#ifndef REALGA_STAT_H
-#define REALGA_STAT_H
+#pragma once
 
+#include "messages.h"
 #include <cstddef> // for size_t
 
 namespace Stat
@@ -27,6 +27,7 @@ namespace Stat
 
     // Generate a Gaussian-distributed float with mean and sigma
     float randGaussian(float mean, float sigma);
+    float randGaussian(float mean, float sigma, float lb, float ub);
 
     // Set fixed seed for reproducibility
     void setSeed(unsigned int seed);
@@ -37,5 +38,3 @@ namespace Stat
     // Templated function for generating random integers in [min_val, max_val]
     int randInteger(int min_val, int max_val);
 };
-
-#endif // REALGA_STAT_H

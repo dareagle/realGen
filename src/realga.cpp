@@ -83,10 +83,21 @@ void RealGA::init(RealGAOptions &opt, FitnessFunction *func, bool keepState)
     // set fitness function
     mFitnessFcn = func;
 
-    if (mSelectionAlgorithm) { delete mSelectionAlgorithm; mSelectionAlgorithm = nullptr; }
-    if (mCrossover) { delete mCrossover; mCrossover = nullptr; }
-    if (mMutation) { delete mMutation; mMutation = nullptr; }
-
+    if (mSelectionAlgorithm)
+    {
+        delete mSelectionAlgorithm;
+        mSelectionAlgorithm = nullptr;
+    }
+    if (mCrossover)
+    {
+        delete mCrossover;
+        mCrossover = nullptr;
+    }
+    if (mMutation)
+    {
+        delete mMutation;
+        mMutation = nullptr;
+    }
 
     if (keepState)
     {
@@ -110,7 +121,7 @@ void RealGA::init(RealGAOptions &opt, FitnessFunction *func, bool keepState)
         {
             resetMutationPerc();
         }
-            // Always clean up old strategies (move outside if-block)
+        // Always clean up old strategies (move outside if-block)
 
         // Create the selection strategy
         switch (mOptions.selectionType)
@@ -288,10 +299,11 @@ void RealGA::evolve()
 
     // 1. Efficiency: Use nth_element to move the best individuals to the front
     // This is O(N) on average and handles ties perfectly.
-    std::nth_element(mPopulation.begin(), 
-                     mPopulation.begin() + elitismNumber, 
-                     mPopulation.end(), 
-                     [](const RealChromosome& a, const RealChromosome& b) {
+    std::nth_element(mPopulation.begin(),
+                     mPopulation.begin() + elitismNumber,
+                     mPopulation.end(),
+                     [](const RealChromosome &a, const RealChromosome &b)
+                     {
                          return a.fitness < b.fitness;
                      });
 
@@ -305,7 +317,8 @@ void RealGA::evolve()
     for (; newPopIdx < elitismNumber; ++newPopIdx)
     {
         mNewPopulation[newPopIdx] = mPopulation[newPopIdx];
-        if (mOptions.mutateDuplicatedFitness) {
+        if (mOptions.mutateDuplicatedFitness)
+        {
             fitnessRegistry.insert(mNewPopulation[newPopIdx].fitness);
         }
     }
@@ -316,7 +329,7 @@ void RealGA::evolve()
     {
         int idxA, idxB;
         mSelectionAlgorithm->select(mFitnessValues, idxA, idxB);
-        
+
         mCrossover->crossover(mPopulation[idxA], mPopulation[idxB], offspring);
         mMutation->mutate(offspring, mLB, mUB);
         offspring.fitness = evalFitness(offspring);
@@ -354,10 +367,10 @@ void RealGA::evolve()
     }
 
     mPopulation = mNewPopulation;
-    
+
     // Crucial: Update the fitness value cache for the Selection Algorithm next turn
-    fillFitnessValues(mPopulation); 
-    
+    fillFitnessValues(mPopulation);
+
     mGeneration++;
 }
 // ===================================== Init function =============================
@@ -366,7 +379,10 @@ void RealGA::popInitRandUniform()
 {
     for (size_t i = 0; i < mOptions.populationSize; i++)
     {
-        mPopulation[i].randUniform(mLB, mUB);
+        for (size_t j = 0; j < mOptions.chromosomeSize; j++)
+        {
+            mPopulation[i].gene[j] = Stat::randUniform(mLB[j], mUB[j]);
+        }
         mPopulation[i].fitness = evalFitness(mPopulation[i]);
     }
     fillFitnessValues(mPopulation);
@@ -377,7 +393,10 @@ void RealGA::popInitRandGaussian(float mean, float sigma)
 {
     for (size_t i = 0; i < mOptions.populationSize; i++)
     {
-        mPopulation[i].randGaussian(mean, sigma, mLB, mUB);
+        for (size_t j = 0; j < mOptions.chromosomeSize; j++)
+        {
+            mPopulation[i].gene[j] = Stat::randGaussian(mean, sigma, mLB[j], mUB[j]);
+        }
         mPopulation[i].fitness = evalFitness(mPopulation[i]);
     }
     fillFitnessValues(mPopulation);

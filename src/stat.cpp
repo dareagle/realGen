@@ -20,20 +20,14 @@ float Stat::randUniform()
 
 float Stat::randUniform(float lb, float ub)
 {
-    if (lb >= ub)
-    {
-        throw std::invalid_argument("lb >= ub");
-    }
+    REALGA_ERROR(lb >= ub, "lb should be less than up");
     std::uniform_real_distribution<float> dist(lb, ub);
     return dist(generator);
 }
 
 int Stat::randIndex(int n)
 {
-    if (n <= 0)
-    {
-        throw std::invalid_argument("n <= 0");
-    }
+    REALGA_ERROR(n <= 0, "n should be positive");
     std::uniform_int_distribution<int> dist(0, n - 1);
     return dist(generator);
 }
@@ -48,6 +42,28 @@ float Stat::randGaussian(float mean, float sigma)
 
     // Use thread-local normal distribution
     normal_dist.param(std::normal_distribution<float>::param_type(mean, sigma));
+    return normal_dist(generator);
+}
+
+float Stat::randGaussian(float mean, float sigma, float lb, float ub)
+{
+    // Ensure minimum sigma to avoid numerical issues
+    if (sigma < MIN_SIGMA)
+    {
+        sigma = MIN_SIGMA;
+    }
+
+    // Use thread-local normal distribution
+    normal_dist.param(std::normal_distribution<float>::param_type(mean, sigma));
+    float value = normal_dist(generator);
+    if (value < lb)
+    {
+        value = lb;
+    }
+    if (value > ub)
+    {
+        value = ub;
+    }
     return normal_dist(generator);
 }
 
@@ -68,9 +84,10 @@ void Stat::setSeedFromDevice()
 
 int Stat::randInteger(int min_val, int max_val)
 {
-    if (min_val >= max_val)
+    REALGA_ERROR(min_val > max_val, "min_val should be less than max_val");
+    if (min_val == max_val)
     {
-        throw std::invalid_argument("min_val >= max_val");
+        return min_val;
     }
     std::uniform_int_distribution<int> dist(min_val, max_val);
     return dist(generator);
